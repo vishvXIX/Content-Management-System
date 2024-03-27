@@ -2,16 +2,16 @@ package com.example.cms.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class InvalidPasswordException extends RuntimeException {
-	
+public class UserNotFoundByIdException extends RuntimeException {
+
 	private String message ;
 
-	public InvalidPasswordException(String message) {
+	public UserNotFoundByIdException(String message) {
 		super();
 		this.message=message;
 	}
 	
-	public InvalidPasswordException(HttpStatus notFound) {
+	public UserNotFoundByIdException(HttpStatus notFound) {
 		
 	}	
 	
@@ -22,4 +22,5 @@ public class InvalidPasswordException extends RuntimeException {
 	public String getMessage() {
 		return message;
 	}
+	
 }

@@ -69,5 +69,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid password.");
 	}
 	
+	@ExceptionHandler (UserNotFoundByIdException.class)
+	public ResponseEntity<Object> handlerusrreNotFound(UserNotFoundByIdException ex){
+		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid UserId.");
+	}
+	
+	
+	
 }
 
