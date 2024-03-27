@@ -1,5 +1,9 @@
 package com.example.cms.entity;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Entity;
@@ -28,5 +32,10 @@ public class User {
 	private String username;
 	private String email;
 	private String password;
+	@CreatedDate
+	private LocalDateTime createdAt;
+	@LastModifiedDate
+	private LocalDateTime lastModifiedAt;
+	private boolean isDeleted;
 	
 }
