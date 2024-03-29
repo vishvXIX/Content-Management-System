@@ -1,18 +1,18 @@
 package com.example.cms.serviceImpl;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.cms.entity.Blog;
+import com.example.cms.entity.ContributionPanel;
 import com.example.cms.exception.BlogNotFoundByIdException;
 import com.example.cms.exception.TitleNotAvailableException;
 import com.example.cms.exception.TopicsNotSpecifiedException;
 import com.example.cms.exception.UserNotFoundByIdException;
 import com.example.cms.repository.BlogRepository;
+import com.example.cms.repository.ContribustionPanelRepository;
 import com.example.cms.repository.UserRepository;
 import com.example.cms.requestDTOs.BlogRequest;
 import com.example.cms.responseDTOs.BlogResponse;
@@ -29,24 +29,30 @@ public class BlogServiceIMPL implements BlogService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private ContribustionPanelRepository contribustionPanelRepository;
+
+	@Autowired
 	private ResponseStructure<BlogResponse> structure;
 
 	@Override
 	public ResponseEntity<ResponseStructure<BlogResponse>> saveBlog(int userId, BlogRequest request) {
 
-		return userRepository.findById(userId).map(u ->{
+		return userRepository.findById(userId).map(user ->{
 
 			if(blogRepository.existsByTitle(request.getTitle())) {
 				throw new TitleNotAvailableException("Failed to create blog");
 			}
-
 			if(request.getTopics().length<1) {
 				throw new TopicsNotSpecifiedException("Failed to create blog");
 			}
 
-			Blog blog =mapToBlog(request);
-			blog.setUsers(Arrays.asList(u));
-			blogRepository.save(blog);
+			Blog blog = mapToBlog(request);
+			ContributionPanel panel = contribustionPanelRepository.save(new ContributionPanel());
+			blog.setContributionPanel(panel);
+			blog.setUsers(user);
+
+			//			blog.setUsers(Arrays.asList(u));
+			blog = blogRepository.save(blog);
 
 			return ResponseEntity.ok(structure.setStatus(HttpStatus.OK.value())
 					.setMessage("Blog Saved Successfully!!")
@@ -78,6 +84,7 @@ public class BlogServiceIMPL implements BlogService {
 		return blogRepository.findById(blogId).map(existingBlog -> {
 			Blog updatedBlog = mapToBlog(request);
 			updatedBlog.setBlogId(blogId);
+			
 			blogRepository.save(updatedBlog);
 
 			return ResponseEntity.ok(structure
@@ -87,15 +94,15 @@ public class BlogServiceIMPL implements BlogService {
 
 		})
 				.orElseThrow(()-> new BlogNotFoundByIdException("Blog Not Found By Id."));
-				
+
 	}
-	
+
 	@Override
 	public ResponseEntity<Boolean> checkTitle(String title) {
-		
-		   boolean blogExists = blogRepository.existsByTitle(title);
-	        return ResponseEntity.ok(blogExists);
-		
+
+		boolean blogExists = blogRepository.existsByTitle(title);
+		return ResponseEntity.ok(blogExists);
+
 	}
 
 

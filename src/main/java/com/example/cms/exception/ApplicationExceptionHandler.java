@@ -79,6 +79,21 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid BlogId.");
 	}
 	
+	@ExceptionHandler (TitleNotAvailableException.class)
+	public ResponseEntity<Object> handlerusrreNotFound(TitleNotAvailableException ex){
+		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid BlogId.");
+	}
+	
+	@ExceptionHandler (TopicsNotSpecifiedException.class)
+	public ResponseEntity<Object> handlerusrreNotFound(TopicsNotSpecifiedException ex){
+		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid BlogId.");
+	}
+	
+	@ExceptionHandler (IllagalAccessRequestException.class)
+	public ResponseEntity<Object> handlerusrreNotFound(IllagalAccessRequestException ex){
+		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid BlogId.");
+	}
+	
 	
 }
 

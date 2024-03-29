@@ -37,9 +37,10 @@ public class UserServiceIMPL implements UserService {
 		if (repository.existsByEmail(request.getEmail())) {
 			throw new EmailAlreadyExistsException("Email is already registered.");
 		}
-
-		User user = repository.save(maptoUser(request));
-
+		
+		User user = maptoUser(request);
+		repository.save(user);
+		
 		return ResponseEntity.ok(structure
 				.setStatus(HttpStatus.OK.value())
 				.setMessage("User Registration Is Successfully!!")

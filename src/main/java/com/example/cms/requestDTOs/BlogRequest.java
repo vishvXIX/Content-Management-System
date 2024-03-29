@@ -1,7 +1,5 @@
 package com.example.cms.requestDTOs;
 
-import java.util.List;
-
 import com.example.cms.entity.User;
 
 import jakarta.validation.constraints.Pattern;
@@ -17,6 +15,6 @@ public class BlogRequest {
 	private String[] topics;
 	private String about;
 	
-	private List<User> users;
+	private User users;
 	
 }
