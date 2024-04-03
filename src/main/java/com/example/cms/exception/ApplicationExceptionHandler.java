@@ -94,6 +94,10 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid BlogId.");
 	}
 	
+	@ExceptionHandler (BlogPostNotFoundByIdException.class)
+	public ResponseEntity<Object> handlerusrreNotFound(BlogPostNotFoundByIdException ex){
+		return structure(HttpStatus.FOUND,ex.getMessage(),"please enter a valid BlogId.");
+	}
 	
 }
 

@@ -1,7 +1,5 @@
 package com.example.cms.responseDTOs;
 
-import java.util.List;
-
 import com.example.cms.entity.User;
 
 import lombok.Builder;

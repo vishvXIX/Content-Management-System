@@ -28,31 +28,31 @@ public class ContributionPanelIMPL implements ContributionPanelService {
 	@Autowired
 	private BlogRepository blogRepository;
 
+	@Autowired
 	private ResponseStructure<ContributionPanelResponse> structure;
 
 	@Override
 	public ResponseEntity<ResponseStructure<ContributionPanelResponse>> addContributor(int userId, int panelId) {
 
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
-
-		return userRepository.findByEmail(email).map(owner -> {
+		
+		return userRepository.findByEmail(email).map(owner -> {	
 			return contribustionPanelRepository.findById(panelId).map(panel -> {
-				if(blogRepository.existsByUsersAndContributionPanel(owner,panel)) {
-					throw new IllagalAccessRequestException("failed to add attributor");
-				}
+//				if(blogRepository.existsByUsersAndContributionPanel(owner,panel)) {
+//					throw new IllagalAccessRequestException("failed to add contributor");
+//				}
 				return userRepository.findById(userId).map(contributor -> {
 					panel.getUsers().add(contributor);
 					contribustionPanelRepository.save(panel);
 
 					return ResponseEntity.ok(structure
 							.setStatus(HttpStatus.OK.value())
-							.setMessage("Blogs Fatched Successfully!!.")
+							.setMessage("Contributor added Successfully!!.")
 							.setData(mapToContributeREsponse(panel)));
 
 				}).orElseThrow(()-> new UserNotFoundByIdException("User Not Found By Id."));
 			}).orElseThrow(()-> new UserNotFoundByIdException("User Not Found By Id."));
 		}).get();
-
 	}
 	
 	@Override

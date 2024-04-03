@@ -105,7 +105,7 @@ public class UserServiceIMPL implements UserService {
 		return User.builder()
 				.email(request.getEmail())
 				.password(encoder.encode(request.getPassword()))
-				.username(request.getEmail().split("@")[0])
+				.username(request.getEmail())
 				.isDeleted(request.isIsdeleted())
 				.build();
 

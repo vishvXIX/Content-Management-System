@@ -54,7 +54,8 @@ public class BlogServiceIMPL implements BlogService {
 			//			blog.setUsers(Arrays.asList(u));
 			blog = blogRepository.save(blog);
 
-			return ResponseEntity.ok(structure.setStatus(HttpStatus.OK.value())
+			return ResponseEntity.ok(structure
+					.setStatus(HttpStatus.OK.value())
 					.setMessage("Blog Saved Successfully!!")
 					.setData(mapToBlogResponse(blog)));
 
@@ -84,7 +85,7 @@ public class BlogServiceIMPL implements BlogService {
 		return blogRepository.findById(blogId).map(existingBlog -> {
 			Blog updatedBlog = mapToBlog(request);
 			updatedBlog.setBlogId(blogId);
-			
+
 			blogRepository.save(updatedBlog);
 
 			return ResponseEntity.ok(structure
@@ -104,7 +105,6 @@ public class BlogServiceIMPL implements BlogService {
 		return ResponseEntity.ok(blogExists);
 
 	}
-
 
 
 	private Blog mapToBlog(BlogRequest request) {
